@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            {% if user_other.profile.profile_pic %}
+            <img src="{{ user_other.profile.profile_pic.url }}" alt="..." width="250" height="250"
+                 class="rounded-circle">
+            {% else %}
+            <img src="https://picsum.photos/id/1060/250/235/?blur=2" alt="" class="float-start m-3">
+            {% endif %}
+        </div>
+
+        <div class="col-sm-8">
+            <h1>
+                {{ user_other.username }}&nbsp;
+            </h1>
+
+            <h1> {% if not already_followed %}
+                <a href="{% url 'follow' username=user_other.username  %}" class="btn btn-primary">Follow</a>
+                {% else %}
+                {{ check }}
+                <a href="{% url 'unfollow' username=user_other.username  %}" class="btn btn-primary">UnFollow</a>
+                {% endif %}
+            </h1>
+            <h1>
+                <form method="POST" action="{% url 'send' user_other.profile.slug %}">
+                    {% csrf_token %}
+                    <button class="btn btn-primary" type="submit">Написать сообщение</button>
+                </form>
+            </h1>
+
+            <h2>{{ user_other.post.count }} Posts &nbsp;{{ user_other.follower.count}} Follower &nbsp;
+                {{user_other.following.count}}Following &nbsp;<div class="col-md-12 p-5">
+
+                    <h6> {{ user_other.profile.bio|safe }}</h6>
+                </div>
+            </h2>
+
+        </div>
+
+    </div>
+</div>
+</div>
+
+<br><br>
+<div class="row">
+    {% for post in user_other.post.all %}
+    <div class="crop">
+        <style>
+  .crop {
+    width: 400px;
+    height: 300px;
+    overflow: hidden;
+   }
+  .crop img {
+        width: 400px;
+        height: 300px;
+        margin: 10px
+    }
+
+
+
+
+
+
+
+
+
+        </style>
+        <img src="/media/{{ post.image }}" alt="">
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

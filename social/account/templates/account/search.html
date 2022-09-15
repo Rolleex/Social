@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{%block title %} Search People {% endblock %}
+
+{% block content %}
+
+<div class="row">
+{% for result in people %}
+
+    <div class="col-sm-2">
+        {% if result.user.profile.profile_pic %}
+        <img src="{{ result.profile_pic.url }}" width="200" height="100" alt="" class="rounded-circle">
+        {% else %}
+        <img src="https://picsum.photos/id/1060/300/201/?blur=2" alt="">
+        {% endif %}
+        <h3><a href="{% url 'user' username=result.user %}">{{ result.user }}</a></h3>
+        {% empty %}
+        <p>Not found</p>
+    </div>
+
+{% endfor %}
+</div>
+
+{% endblock %}

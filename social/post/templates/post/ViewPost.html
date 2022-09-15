@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{%block title %} View Post {% endblock %}
+
+{% block content %}
+<center>
+
+
+    <div class="col-sm-8">
+        {% for news in feed %}
+        <div style="border:1px solid #ddd">
+            <br>
+            {% if news.author.profile.profile_pic.url %}
+            <img src="{{ news.author.profile.profile_pic.url }}" width="200" height="100" alt=""
+                 class="rounded-circle">
+            {% else %}
+            <img src="https://picsum.photos/id/1060/300/201/?blur=2" alt="">
+            {% endif %}
+            <h3><a href="#">{{ news.author }}</a></h3>
+
+            <br>
+            <img src="{{ news.image.url }}" alt="" width="450" height="400">
+            <div style="padding:20px;">
+                <h3>{{ news.caption }}</h3>
+                {% if news.pk in liked_post_list %}
+
+                <a href="{% url 'unliked' pk=news.pk %}" class="btn btn-primary">UnLike</a>
+                {% else %}
+                <a href="{% url 'liked' pk=news.pk %}" class="btn btn-primary">like</a>
+
+                {% endif %}
+
+            </div>
+        </div>
+
+        {% empty %}
+        <p>Not found</p>
+
+        {% endfor %}
+
+    </div>
+
+
+</center>
+{% endblock %}

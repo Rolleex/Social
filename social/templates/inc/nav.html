@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'profile' request.user %}">Home</a>
+                </li>
+                <div class="container-fluid">
+                    <form action="{% url 'search' %}" class="d-flex">
+                        <input class="form-control me-2" type="search" name="s" placeholder="Search"
+                               aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'edit' %}" class="btn btn-light">Редактировать профиль</a></h2>
+                <a href="{% url 'viewpost' %}" class="btn btn-light">Список Новостей</a></h2>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Post Content</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    {{ form.as_p }}
+                                    {% csrf_token %}
+
+                                    <button type="submit" class="btn btn-info btn-sm">Post</button>
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form method="GET" action="{% url 'inbox' %}">
+                    <button class="btn btn-light" type="submit">Список сообщений</button>
+                </form>
+
+                {% endif %}
+                </li>
+            </ul>
+        </div>
+        <span class="navbar-text">
+               {% if request.user.is_authenticated %}
+           <a href="{% url 'profile' request.user %}"> {{ user.username }}</a> &nbsp; <a
+                href="{% url 'logout'%}">Выход</a>
+                {% else %}
+        <a href="{% url 'register'%}">Регистрация</a> | <a href="{% url 'login' %}">Войти</a>
+            {% endif %}
+            </span>
+        </ul>
+    </div>
+    </div>
+</nav>

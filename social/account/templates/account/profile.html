@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            {% if profile_page.profile_pic %}
+            <img src="{{ profile_page.profile_pic.url }}" alt="..." width="250" height="250" class="rounded-circle">
+            {% else %}
+            <img src="https://picsum.photos/id/1060/250/235/?blur=2" alt="" class="float-start m-3">
+            {% endif %}
+        </div>
+        <div class="col-sm-8">
+            <h2>{{ profile_page.user }}  <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Make Post
+                </button></h2>
+            <h2>{{ profile_page.user.post.count }} Posts &nbsp;{{ profile_page.user.follower.count}} Following &nbsp;
+                {{profile_page.user.following.count}}Follower</h2>
+            <br>
+            <h6> {{ profile_page.bio|safe }}</h6>
+        </div>
+
+
+    </div>
+</div>
+<br>
+<div class="container">
+    <div class="row">
+        {% for post in profile_page.user.post.all %}
+        <div class="crop">
+            <style>
+  .crop {
+    width: 400px;
+    height: 300px;
+    overflow: hidden;
+   }
+  .crop img {
+        width: 400px;
+        height: 300px;
+        margin: 10px
+    }
+
+
+
+            </style>
+            <img src="/media/{{ post.image }}" alt="">
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
