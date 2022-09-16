@@ -29,7 +29,7 @@
                 <a href="{% url 'liked' pk=news.pk %}" class="btn btn-primary">like</a>
 
                 {% endif %}
-
+                <h4>Нравится: {{ news.like_post.count }}</h4>
             </div>
         </div>
 

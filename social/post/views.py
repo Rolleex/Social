@@ -14,7 +14,7 @@ def viewpost(request):
     feed = Post.objects.filter(author__in=following_list.values_list('following'))
     liked_post = Like.objects.filter(user=request.user)
     liked_post_list = liked_post.values_list('post', flat=True)
-    return render(request, 'post/ViewPost.html', context={'feed': feed,'liked_post_list':liked_post_list })
+    return render(request, 'post/ViewPost.html', context={'feed': feed, 'liked_post_list': liked_post_list})
 
 
 @login_required
