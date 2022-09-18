@@ -79,7 +79,6 @@ class ProfilePage(DetailView, CreateView):
     context_object_name = 'profile_page'
     form_class = PostForm
 
-
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
